@@ -1,0 +1,34 @@
+Registro_Curriculo(Id_Registro, Id_Endereço)
+	Id_Endereço referencia Endereço
+Organização(Id_Org, Id_Registro, Id_Pessoa)
+	Id_Registro referencia Registro_Curriculo
+	Id_Pessoa referencia Pessoa
+Atv_Profissional(Data_Inicio, Data_Fim, Id_Org, Id_Pessoa)
+	Id_Org referencia Organização
+	Id_Pessoa referencia Pessoa
+Pessoa(Id_Pessoa)
+Endereço(Id_Endereço)
+Endereço_Residencial(Id_Endereço)
+	Id_Endereço referencia Endereço
+Endereço_Comercial(Id_Endereço)
+	Id_Endereço referencia Endereço
+REGISTRO(Id_Registro, Cod_Palavra, Id_Autor)
+	Id_Registro referencia Registro_Curriculo
+	Cod_Palavra referencia Palavra_Chave
+	Id_Autor referencia Autor
+Autor(Id_Autor)
+Palavra_Chave(Cod_Palavra)
+POSSUI_2(Cod_Palavra, Codigo)
+	Cod_Palavra referencia Palavra_Chave
+	Codigo referencia Produção
+Produção(Codigo, Ano, Titulo)
+Cientifica(Local_Publicação, Codigo)
+	Codigo referencia Produção
+Tecnica(Numero, Data_Registro, Codigo)
+	Codigo referencia Produção
+Artistica(Codigo)
+	Codigo referencia Produção
+POSSUI_1(Local_Publicação, Numero, Id_Autor)
+	Local_Publicaççao referencia Cientifica
+	Numero referencia Tecnica
+	Id_Autor referencia Autor

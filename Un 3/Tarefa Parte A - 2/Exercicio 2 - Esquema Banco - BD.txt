@@ -1,0 +1,98 @@
+CREATE TABLE Registro_Curriculo (
+Id_Registro VARCHAR(100) PRIMARY KEY,
+Id_Endereço VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Endereço (
+Id_Endereço VARCHAR(100) PRIMARY KEY
+);
+
+CREATE TABLE End_Residencial (
+Id_Endereço VARCHAR(100) NOT NULL,
+FOREIGN KEY(Id_Endereço) REFERENCES Endereço (Id_Endereço)
+);
+
+CREATE TABLE End_Comercial (
+Id_Endereço VARCHAR(100) NOT NULL,
+FOREIGN KEY(Id_Endereço) REFERENCES Endereço (Id_Endereço)
+);
+
+CREATE TABLE Atv_Profissional (
+Data_Inicio TIMESTAMP PRIMARY KEY,
+Data_Fim TIMESTAMP,
+Id_Org VARCHAR(100) NOT NULL,
+Id_Pessoa VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Organização (
+Id_Org VARCHAR(100) PRIMARY KEY,
+Id_Registro VARCHAR(100) NOT NULL,
+Id_Pessoa VARCHAR(100) NOT NULL,
+FOREIGN KEY(Id_Registro) REFERENCES Registro_Curriculo (Id_Registro)
+);
+
+CREATE TABLE Pessoa (
+Id_Pessoa VARCHAR(100) PRIMARY KEY
+);
+
+CREATE TABLE Produção (
+Codigo VARCHAR(100) PRIMARY KEY,
+Ano INTEGER NULL,
+Titulo VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Cientifica (
+Local_Publicação VARCHAR(100) PRIMARY KEY,
+Codigo VARCHAR(100) NOT NULL,
+FOREIGN KEY(Codigo) REFERENCES Produção (Codigo)
+);
+
+CREATE TABLE Tecnica (
+Numero INTEGER PRIMARY KEY,
+Data_Registro TIMESTAMP,
+Codigo VARCHAR(100) NOT NULL,
+FOREIGN KEY(Codigo) REFERENCES Produção (Codigo)
+);
+
+CREATE TABLE Artistica (
+Codigo VARCHAR(100) NOT NULL,
+FOREIGN KEY(Codigo) REFERENCES Produção (Codigo)
+);
+
+CREATE TABLE Autor (
+Id_Autor VARCHAR(100) PRIMARY KEY
+);
+
+CREATE TABLE Palavre_Chave (
+Cod._Palavra VARCHAR(100) PRIMARY KEY
+);
+
+CREATE TABLE REGISTRO (
+Id_Registro VARCHAR(100) NOT NULL,
+Cod._Palavra VARCHAR(100) NOT NULL,
+Id_Autor VARCHAR(100) NOT NULL,
+FOREIGN KEY(Id_Registro) REFERENCES Registro_Curriculo (Id_Registro),
+FOREIGN KEY(Cod._Palavra) REFERENCES Palavre_Chave (Cod._Palavra),
+FOREIGN KEY(Id_Autor) REFERENCES Autor (Id_Autor)
+);
+
+CREATE TABLE POSSUI_2 (
+Cod._Palavra VARCHAR(100) NOT NULL,
+Codigo VARCHAR(100) NOT NULL,
+FOREIGN KEY(Cod._Palavra) REFERENCES Palavre_Chave (Cod._Palavra),
+FOREIGN KEY(Codigo) REFERENCES Produção (Codigo)
+);
+
+CREATE TABLE POSSUI_1 (
+Local_Publicação VARCHAR(100) NOT NULL,
+Numero INTEGER NULL,
+Id_Autor VARCHAR(100) NOT NULL,
+FOREIGN KEY(Local_Publicação) REFERENCES Cientifica (Local_Publicação),
+FOREIGN KEY(Numero) REFERENCES Tecnica (Numero),
+FOREIGN KEY(Id_Autor) REFERENCES Autor (Id_Autor)
+);
+
+ALTER TABLE Registro_Curriculo ADD FOREIGN KEY(Id_Endereço) REFERENCES Endereço (Id_Endereço)
+ALTER TABLE Atv._Profissional ADD FOREIGN KEY(Id_Org) REFERENCES Organização (Id_Org)
+ALTER TABLE Atv._Profissional ADD FOREIGN KEY(Id_Pessoa) REFERENCES Pessoa (Id_Pessoa)
+ALTER TABLE Organização ADD FOREIGN KEY(Id_Pessoa) REFERENCES Pessoa (Id_Pessoa)
